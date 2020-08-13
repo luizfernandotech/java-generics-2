@@ -1,5 +1,6 @@
 package application;
 
+import entities.Product;
 import services.CalculationService;
 
 import java.io.BufferedReader;
@@ -12,20 +13,21 @@ public class Program {
 
     public static void main(String[] args) {
 
-        List<Integer> list = new ArrayList<>();
+        List<Product> list = new ArrayList<>();
 
-        String path = System.getProperty("user.dir") + "/src/files/in.txt";
+        String path = System.getProperty("user.dir") + "/src/files/producs.csv";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 
             String line = br.readLine();
             while (line != null) {
-                list.add(Integer.parseInt(line));
+                String[] productData = line.split(",");
+                list.add(new Product(productData[0], Double.parseDouble(productData[1])));
                 line = br.readLine();
             }
 
-            Integer x = CalculationService.max(list);
-            System.out.println("Max: ");
+            Product x = CalculationService.max(list);
+            System.out.println("Most expensive: ");
             System.out.println(x);
 
         } catch (IOException e) {
